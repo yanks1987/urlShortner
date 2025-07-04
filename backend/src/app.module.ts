@@ -7,11 +7,12 @@ import { TypeOrmModule } from '@nestjs/typeorm';
   imports: [
     TypeOrmModule.forRoot({
       type: 'postgres',
+      // Use environment variables for DB config, with sensible defaults
       host: process.env.DB_HOST || 'localhost',
       port: parseInt(process.env.DB_PORT || '5432', 10),
-      username: process.env.DB_USERNAME || 'your_db_user',
-      password: process.env.DB_PASSWORD || 'your_db_password',
-      database: process.env.DB_DATABASE || 'your_db_name',
+      username: process.env.DB_USERNAME || 'urluser',
+      password: process.env.DB_PASSWORD || 'urlpassword',
+      database: process.env.DB_DATABASE || 'urlshortener',
       autoLoadEntities: true,
       synchronize: true, // set to false in production!
     }),

@@ -50,50 +50,47 @@ https://{domain}/abc123
 
 ---
 
-A full-stack URL shortener application with React (TypeScript) frontend and Node.js (TypeScript) backend.
+A full-stack URL shortener application with React (Next.js, TypeScript) frontend and Node.js (NestJS, TypeScript) backend, using PostgreSQL for data storage.
 
 ## Setup
 
-### Running the Backend
-
-#### Using Docker Compose (Recommended)
+### Running Everything with Docker Compose (Recommended)
 1. From the project root, run:
    ```sh
    docker compose up --build
    ```
-   This will start both the backend and frontend containers.
-
-#### Running Locally (Without Docker)
-1. Open a terminal and navigate to the backend folder:
-   ```sh
-   cd backend
-   ```
-2. Install dependencies:
-   ```sh
-   npm install
-   ```
-3. Build the TypeScript code:
-   ```sh
-   npm run build
-   ```
-4. Start the backend server:
-   ```sh
-   npm start
-   ```
-   By default, the backend runs on [http://localhost:5000](http://localhost:5000).
+   This will start the backend (NestJS), frontend (Next.js), and PostgreSQL database containers. The backend will be available at [http://localhost:4001](http://localhost:4001), the frontend at [http://localhost:3000](http://localhost:3000), and the database at [localhost:5432](localhost:5432).
 
 ---
 
-### Running the Frontend
-
-#### Using Docker Compose (Recommended)
-1. From the project root, run:
+### Running the Backend (NestJS) Locally
+1. Make sure PostgreSQL is running locally or via Docker Compose. You can use the following credentials (as set in the project):
+   - **Username:** urluser
+   - **Password:** urlpassword
+   - **Database:** urlshortener
+   - **Host:** localhost (or `db` if using Docker Compose)
+   - **Port:** 5432
+2. Open a terminal and navigate to the backend folder:
    ```sh
-   docker compose up --build
+   cd backend
    ```
-   This will start both the backend and frontend containers.
+3. Install dependencies:
+   ```sh
+   npm install
+   ```
+4. Build the TypeScript code:
+   ```sh
+   npm run build
+   ```
+5. Start the backend server:
+   ```sh
+   npm start
+   ```
+   By default, the backend runs on [http://localhost:4000](http://localhost:4000) (or [http://localhost:4001](http://localhost:4001) if using Docker Compose).
 
-#### Running Locally (Without Docker)
+---
+
+### Running the Frontend (Next.js) Locally
 1. Open a terminal and navigate to the frontend folder:
    ```sh
    cd frontend
@@ -104,6 +101,25 @@ A full-stack URL shortener application with React (TypeScript) frontend and Node
    ```
 3. Start the frontend development server:
    ```sh
-   npm start
+   npm run dev
    ```
    By default, the frontend runs on [http://localhost:3000](http://localhost:3000).
+
+---
+
+### Running PostgreSQL Locally (Optional, if not using Docker Compose)
+1. Install PostgreSQL (see https://www.postgresql.org/download/).
+2. Start the PostgreSQL service.
+3. Create the database and user:
+   ```sql
+   CREATE DATABASE urlshortener;
+   CREATE USER urluser WITH PASSWORD 'urlpassword';
+   GRANT ALL PRIVILEGES ON DATABASE urlshortener TO urluser;
+   ```
+4. Make sure your backend's database config matches these credentials.
+
+---
+
+**Note:**
+- If you use Docker Compose, all services (frontend, backend, db) are networked together and use the credentials/config in `docker-compose.yml`.
+- If running locally, ensure ports do not conflict and update your `.env` or config files as needed.
