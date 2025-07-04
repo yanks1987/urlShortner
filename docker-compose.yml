@@ -6,4 +6,21 @@ services:
   backend:
     build: ./backend
     ports:
-      - "5001:5000"
+      - "4001:4000"
+    environment:
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_USERNAME=urluser
+      - DB_PASSWORD=urlpassword
+      - DB_DATABASE=urlshortener
+    depends_on:
+      - db
+  db:
+    image: postgres:15
+    restart: always
+    environment:
+      POSTGRES_USER: urluser
+      POSTGRES_PASSWORD: urlpassword
+      POSTGRES_DB: urlshortener
+    ports:
+      - "5432:5432"

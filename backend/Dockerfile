@@ -14,10 +14,10 @@ RUN npm install
 COPY . .
 
 # 6. Build the TypeScript code
-RUN npx tsc
+RUN npm run build
 
-# 7. Expose the port your app runs on (change if not 5000)
-EXPOSE 5000
+# 7. Expose the port your NestJS app runs on (e.g., 4000)
+EXPOSE 4000
 
-# 8. Start the app (adjust the path if your entry point is different)
-CMD ["node", "dist/index.js"]
+# 8. Start the app (NestJS outputs to dist/main.js by default)
+CMD ["node", "dist/main.js"]
