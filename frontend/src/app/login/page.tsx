@@ -36,6 +36,7 @@ export default function Login() {
         setError(data.message || 'Login failed');
       }
     } catch (err) {
+      console.log(err)
       setError('An error occurred. Please try again.');
     } finally {
       setLoading(false);

@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException, ConflictException, BadRequestException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, Not } from 'typeorm';
 import { Url } from './url.entity';
 import { User } from '../user/user.entity';
 
@@ -16,6 +16,14 @@ export class UrlService {
     const existingUrl = await this.urlRepository.findOne({ where: { slug } });
     if (existingUrl) {
       throw new ConflictException('Slug already exists. Please choose a different one.');
+    }
+
+    // Check for duplicate originalUrl for this user
+    if (user) {
+      const duplicate = await this.urlRepository.findOne({ where: { originalUrl, user } });
+      if (duplicate) {
+        throw new ConflictException('You have already shortened this URL.');
+      }
     }
 
     // Validate URL format
@@ -84,6 +92,12 @@ export class UrlService {
     
     if (!url) throw new NotFoundException('URL not found');
     if (url.user?.id !== user.id) throw new NotFoundException('Not authorized to update this URL');
+    
+    // Check for duplicate originalUrl for this user (excluding this slug)
+    const duplicate = await this.urlRepository.findOne({ where: { originalUrl, user, slug: Not(slug) } });
+    if (duplicate) {
+      throw new ConflictException('You have already shortened this URL.');
+    }
     
     url.originalUrl = originalUrl;
     const savedUrl = await this.urlRepository.save(url);

@@ -18,15 +18,6 @@ interface User {
   email: string;
 }
 
-function isValidUrl(url: string) {
-  try {
-    new URL(url);
-    return true;
-  } catch {
-    return false;
-  }
-}
-
 export default function Dashboard() {
   const [urls, setUrls] = useState<Url[]>([]);
   const [loading, setLoading] = useState(true);
@@ -56,6 +47,7 @@ export default function Dashboard() {
     try {
       setUser(JSON.parse(userData));
     } catch (error) {
+      console.log(error)
       router.push('/login');
     }
   };
@@ -83,6 +75,7 @@ export default function Dashboard() {
       const data = await response.json();
       setUrls(data.urls || data); // Handle both paginated and simple responses
     } catch (error) {
+      console.log(error)
       setError('Failed to load URLs');
     } finally {
       setLoading(false);
@@ -94,7 +87,7 @@ export default function Dashboard() {
     localStorage.removeItem('user');
     router.push('/login');
   };
-
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const copyToClipboard = async (url: string) => {
     try {
       await navigator.clipboard.writeText(url);
@@ -125,6 +118,7 @@ export default function Dashboard() {
       // Refresh the URLs list
       fetchUrls();
     } catch (error) {
+      console.log(error)
       setError('Failed to delete URL');
     }
   };
@@ -172,6 +166,7 @@ export default function Dashboard() {
       // Refresh dashboard list
       fetchUrls();
     } catch (error) {
+      console.log(error)
       setShortenUrlError(error instanceof Error ? error.message : 'Failed to shorten URL');
     } finally {
       setShortenUrlLoading(false);

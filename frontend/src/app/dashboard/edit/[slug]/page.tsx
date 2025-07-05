@@ -47,6 +47,7 @@ export default function EditUrl() {
     try {
       setUser(JSON.parse(userData));
     } catch (error) {
+      console.log(error)
       router.push('/login');
     }
   };
@@ -83,6 +84,7 @@ export default function EditUrl() {
       setUrl(currentUrl);
       setOriginalUrl(currentUrl.originalUrl);
     } catch (error) {
+      console.error(error);
       setError('Failed to load URL');
     } finally {
       setLoading(false);
@@ -113,6 +115,10 @@ export default function EditUrl() {
           localStorage.removeItem('token');
           localStorage.removeItem('user');
           router.push('/login');
+          return;
+        }
+        if (response.status === 409) {
+          setError(data.message || 'You have already shortened this URL.');
           return;
         }
         if (response.status === 404) {
