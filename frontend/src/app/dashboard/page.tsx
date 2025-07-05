@@ -217,7 +217,7 @@ export default function Dashboard() {
       <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
         {/* URL Shortener Form */}
         <div className="bg-white shadow rounded-lg p-6 mb-6">
-          <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
+          <h2 className="text-xl font-semibold mb-4 flex items-center gap-2 text-black">
             <span>URL Shortener</span>
             <span role="img" aria-label="link">🔗</span>
           </h2>
@@ -277,7 +277,7 @@ export default function Dashboard() {
         {/* URLs List */}
         <div className="bg-white shadow rounded-lg">
           <div className="px-6 py-4 border-b border-gray-200">
-            <h2 className="text-xl font-semibold">Your URLs</h2>
+            <h2 className="text-xl font-semibold text-black">Your URLs</h2>
           </div>
           
           {error && (
