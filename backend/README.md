@@ -96,3 +96,48 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 ## License
 
 Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+
+# URL Shortener Backend
+
+A NestJS-based URL shortener service with authentication and rate limiting.
+
+## Features
+
+- User authentication (JWT)
+- URL shortening with custom slugs
+- Visit tracking and analytics
+- Rate limiting for security
+- PostgreSQL database
+
+## Rate Limiting
+
+The application implements rate limiting to prevent abuse:
+
+- **Login**: 5 attempts per 5 minutes
+- **Register**: 3 attempts per 10 minutes  
+- **URL Creation**: 10 URLs per minute
+
+Rate limits are enforced per IP address and endpoint. When exceeded, the API returns a `429 Too Many Requests` status with a message indicating when you can try again.
+
+## API Endpoints
+
+### Authentication
+- `POST /auth/register` - Register new user
+- `POST /auth/login` - Login user
+
+### URLs (requires authentication)
+- `POST /urls` - Create short URL
+- `GET /urls` - List user's URLs
+- `PATCH /urls/:slug` - Update URL
+- `DELETE /urls/:slug` - Delete URL
+
+### Public
+- `GET /urls/:slug` - Redirect to original URL
+
+## Setup
+
+1. Install dependencies: `npm install`
+2. Set up environment variables (see `.env.example`)
+3. Start the server: `npm run start:dev`
+
+The server runs on port 4000 by default.
