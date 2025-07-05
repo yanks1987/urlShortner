@@ -13,6 +13,18 @@ https://{domain}/abc123
 
 ---
 
+## Environment Variables Setup
+
+Before running the project, copy the provided `.env.example` file to `.env` and fill in your own secrets and configuration values:
+
+```sh
+cp .env.example .env
+```
+
+Edit `.env` and set values for `JWT_SECRET`, database credentials, etc.
+
+---
+
 ## Requirements
 
 - Build a React application that allows you enter a URL
